@@ -130,13 +130,28 @@ def display_results(displacements, member_forces):
     disp_table = []
     for i in range(len(displacements)//3):
         u, v, t = displacements[3*i:3*i+3]
-        disp_table.append([i+1, u, v, t])
+        # Format to 6 decimal places for consistency with PDF
+        disp_table.append([
+            i+1,
+            f"{u:.6f}",
+            f"{v:.6f}",
+            f"{t:.6f}"
+        ])
     print(tabulate(disp_table, headers=["Node", "u (m)", "v (m)", "theta (rad)"], tablefmt="grid"))
 
     print("\nMember Forces:")
     force_table = []
     for eid, f in member_forces.items():
-        force_table.append([eid, f[0], f[1], f[2], f[3], f[4], f[5]])
+        # Format to 3 decimal places for consistency with PDF
+        force_table.append([
+            eid,
+            f"{f[0]:.3f}",
+            f"{f[1]:.3f}",
+            f"{f[2]:.3f}",
+            f"{f[3]:.3f}",
+            f"{f[4]:.3f}",
+            f"{f[5]:.3f}"
+        ])
     print(tabulate(force_table, headers=["Element", "F1", "F2", "M1", "F3", "F4", "M2"], tablefmt="grid"))
 
 def generate_pdf_report(displacements, member_forces):
